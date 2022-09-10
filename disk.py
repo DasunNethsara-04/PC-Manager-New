@@ -1,3 +1,18 @@
+
+'''disk is a cross-platform library for meausre actual hard disk capacity in Python. Supported platforms:
+
+ - Linux
+ - Windows
+ - macOS
+ - FreeBSD
+ - OpenBSD
+ - NetBSD
+ - Sun Solaris
+ - AIX
+
+Works with Python versions 3.4+.
+'''
+
 import psutil
 
 def main():

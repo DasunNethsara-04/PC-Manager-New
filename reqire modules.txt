@@ -1,0 +1,5 @@
+Please use 'Python 3.8.2'
+
+Pillow  - pip install pillow
+PSUtil  - pip install psutil
+WMI     - pip install wmi
