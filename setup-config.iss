@@ -47,6 +47,9 @@ Source: "C:\Users\Intel\Documents\output\main\splash.py"; DestDir: "{app}"; Flag
 Source: "C:\Users\Intel\Documents\output\main\images\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Users\Intel\Documents\output\main\_internal\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Users\Intel\Documents\output\main\fonts\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Intel\Documents\output\main\fonts\Poppins-Black.ttf"; DestDir: "{fonts}"; Flags: onlyifdoesntexist
+Source: "C:\Users\Intel\Documents\output\main\fonts\Ubuntu-Bold.ttf"; DestDir: "{fonts}"; Flags: onlyifdoesntexist
+Source: "C:\Users\Intel\Documents\output\main\fonts\Game Of Squids.ttf"; DestDir: "{fonts}"; Flags: onlyifdoesntexist
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -57,4 +60,7 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{win}\Fonts\Poppins-Black.ttf"; StatusMsg: "Installing Poppins-Black.ttf..."; Flags: shellexec waituntilterminated
+Filename: "{win}\Fonts\Ubuntu-Bold.ttf"; StatusMsg: "Installing Ubuntu-Bold.ttf..."; Flags: shellexec waituntilterminated
+Filename: "{win}\Fonts\Game Of Squids.ttf"; StatusMsg: "Installing Game Of Squids.ttf..."; Flags: shellexec waituntilterminated
 
