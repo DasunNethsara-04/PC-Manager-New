@@ -62,54 +62,173 @@ import splash
 
 # functions
 def on_minimize(window) -> None:
-    window.withdraw()  # Hide the main window
-    icon = pystray.Icon("PC Manager")
-    icon.icon = Image.open("icon.ico")  # Replace "icon.png" with your icon file
-    icon.title = "PC Manager"
-    
-    def on_double_click(icon, item) -> None:
-        window.deiconify()  # Restore the main window
-        icon.stop()
-    
-    def quit_app(icon, item) -> None:
-        icon.stop()
-        window.destroy()  # Close the application
-    
-    menu = (
-            pystray.MenuItem("Restore", on_double_click),
-            pystray.MenuItem("Open Disk Cleanup Tool", cleanup),
-            pystray.MenuItem("Open Disk Defragmentation Tool", defrag),
-            pystray.MenuItem("Show System Information", sys_info),
-            pystray.MenuItem("Open Computer Management", ctrl),
-            pystray.MenuItem("Windows Information", win),
-            pystray.MenuItem("Quit", quit_app),
+	"""Minimize the main window and display the system tray icon.
+
+    Args:
+        window (tk.Tk): The main window.
+
+    """
+	window.withdraw()  # Hide the main window
+	icon = pystray.Icon("PC Manager")
+	icon.icon = Image.open("icon.ico")  # Replace "icon.png" with your icon file
+	icon.title = "PC Manager"
+	
+	def on_double_click(icon, item) -> None:
+		window.deiconify()  # Restore the main window
+		icon.stop()
+	
+	def quit_app(icon, item) -> None:
+		icon.stop()
+		window.destroy()  # Close the application
+	
+	menu = (
+			pystray.MenuItem("Restore", on_double_click),
+			pystray.MenuItem("Open Disk Cleanup Tool", cleanup),
+			pystray.MenuItem("Open Disk Defragmentation Tool", defrag),
+			pystray.MenuItem("Show System Information", sys_info),
+			pystray.MenuItem("Open Computer Management", ctrl),
+			pystray.MenuItem("Windows Information", win),
+			pystray.MenuItem("Quit", quit_app),
 			)
-    icon.menu = pystray.Menu(*menu)
-    icon.run()
+	icon.menu = pystray.Menu(*menu)
+	icon.run()
 
 def cleanup() -> None:
+	"""
+    This function opens the Windows System Cleanup tool (cleanmgr.exe).
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Raises:
+    None
+
+    Example:
+    To open the System Cleanup tool, simply call the cleanup() function:
+
+    ```python
+    cleanup()
+    ```
+
+    This will start the System Cleanup tool, allowing the user to clean up unnecessary files and optimize their system.
+    """
 	os.startfile('C:\\Windows\\System32\\cleanmgr.exe')
 
 def ctrl() -> None:
+	"""
+    This function opens the Computer Management console.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Raises:
+    None
+
+    This function uses the os module's startfile function to open the 'compmgmt.msc' file located in the 'C:\\WINDOWS\\System32' directory.
+
+    Example:
+    >>> ctrl()
+    """
 	path = 'C:\\WINDOWS\\System32\\compmgmt.msc'
 	os.startfile(os.path.join(path))
 
 def defrag() -> None:
+	"""
+    This function opens the Windows Disk Defragmenter tool.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Raises:
+    None
+
+    Example:
+    >>> defrag()
+    """
 	os.startfile('C:\\Windows\\System32\\dfrgui.exe')
 
 def sys_info() -> None:
+	"""
+    This function opens the System Information window using the 'msinfo32.exe' executable.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Raises:
+    None
+
+    Example:
+    >>> sys_info()
+    """
 	path = 'C:\\WINDOWS\\System32\\msinfo32.exe'
 	os.startfile(os.path.join(path))
 
 def add_rem() -> None:
+	"""
+    This function opens the 'Add or Remove Programs' window in Windows.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Raises:
+    None
+
+    Example:
+    >>> add_rem()
+    """
 	path = 'C:\\WINDOWS\\System32\\appwiz.cpl'
 	os.startfile(os.path.join(path))
 
 def win() -> None:
+	"""
+    This function opens the Windows Information dialog.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Raises:
+    None
+
+    Example:
+    >>> win()
+    """
 	path = 'C:\\WINDOWS\\system32\\winver.exe'
 	os.startfile(os.path.join(path))
 
 def restore() -> None:
+	"""
+    This function opens the System Restore dialog box.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Raises:
+    None
+
+    Example:
+    >>> restore()
+    """
 	os.startfile('C:\\Windows\\System32\\rstrui.exe')
 
 def web() -> None:
@@ -125,18 +244,126 @@ def youtube() -> None:
 	webbrowser.open('https://www.youtube.com/channel/UCpWe6k8GxYuLmlzlvX7VBRg')
 
 def shutdown() -> None:
+	"""
+    This function is used to initiate a system shutdown.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Raises:
+    This function does not raise any exceptions.
+
+    Example:
+    To initiate a system shutdown, simply call the `shutdown()` function.
+
+    ```python
+    shutdown()
+    ```
+
+    This will execute the `shutdown.exe` command with the `-s` (shutdown) and `-t 00` (immediate) options.
+    """
 	os.system('shutdown.exe -s -t 00')
 
 def restart() -> None:
+	"""
+    This function initiates a restart of the system. It uses the 'shutdown.exe' command-line tool to perform the restart operation. The '-r' parameter specifies that a restart should be performed, and the '-t 00' parameter sets the time delay before the restart to zero seconds.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Raises:
+    This function does not raise any exceptions.
+
+    Example:
+    >>> restart()
+    """
 	os.system('shutdown.exe -r -t 00')
 
 def hibernate() -> None:
+	"""
+    This function initiates the system hibernation process. It does this by calling the 'rundll32.exe powrprof.dll, SetSuspendState' function with the appropriate parameters.
+
+    Parameters:
+    No parameters are required for this function.
+
+    Return value:
+    This function does not return any value. It initiates the hibernation process and then exits.
+
+    Raises:
+    This function does not raise any exceptions. However, if the 'rundll32.exe powrprof.dll, SetSuspendState' function fails to execute for any reason, the system hibernation process will not be initiated.
+
+    Example:
+    To initiate the system hibernation process, simply call the 'hibernate' function:
+
+    ```python
+    hibernate()
+    ```
+    """
 	os.system('rundll32.exe powrprof.dll, SetSuspendState')
 
 def lock() -> None:
+	"""
+    This function is used to lock the system. It initiates the system locking process by invoking the appropriate Windows API function.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Raises:
+    This function does not raise any exceptions.
+
+    Usage:
+    To lock the system, simply call the `lock()` function.
+
+    Example:
+    ```python
+    from pc_info import lock
+
+    def main():
+        # Perform some tasks
+        # ...
+
+        # Lock the system
+        lock()
+
+    if __name__ == "__main__":
+        main()
+    ```
+    """
 	os.system('rundll32.exe user32.dll, LockWorkStation')
 
 def log_off() -> None:
+	"""
+    This function initiates the system shutdown process. It uses the 'shutdown.exe' command-line tool to execute the 'l' (log off) option.
+
+    Parameters:
+    No parameters are required for this function.
+
+    Returns:
+    This function does not return any value.
+
+    Raises:
+    This function does not raise any exceptions.
+
+    Usage:
+    To initiate the system shutdown process, simply call the 'log_off' function.
+
+    Example:
+    ```python
+    from pc_info import log_off
+
+    # Call the log_off function to initiate the system shutdown process.
+    log_off()
+    ```
+    """
 	os.system('shutdown.exe -l')
 
 # dis = ''
@@ -459,11 +686,6 @@ def main() -> None:
 
 	# greeting
 	messagebox.showinfo('Welcome', f'Hello, {user}')
-
-	def secs2hours(secs) -> LiteralString:
-		mm, ss = divmod(secs, 60)
-		hh, mm = divmod(mm, 60)
-		return "%d:%02d:%02d" % (hh, mm, ss)
 
 	def battery() -> None:
 		if not hasattr(psutil, "sensors_battery"):
