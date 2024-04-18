@@ -1,18 +1,3 @@
-#-------------------------------------------------------------------------------
-# Name:        	PC Manager
-# Version:	    3.4s
-# Purpose:     	Just for fun
-# Author:      	Dasun Nethsara
-# Created:     	25/06/2022
-# Last Updated: 28/08/2022
-# Copyright:   	(c) Dasun Nethsara 2022
-# Licence:     	free software
-# Platform:	    Windows
-# EXE Package: 	Auto-Py-To-Exe (Python Package), Inno Setup
-# Environment:	Sublime Text
-# Resourses:    -
-#-------------------------------------------------------------------------------
-
 # imports
 from tkinter import *
 from tkinter import ttk
@@ -22,7 +7,7 @@ import platform
 import psutil 				# pip install psutil
 import os
 import datetime
-import disk
+# import disk
 import webbrowser
 import ctypes
 import wmi 				# pip install wmi 
@@ -51,10 +36,10 @@ cpu_threads = psutil.cpu_count(logical=True)
 arch = platform.architecture()[0]
 clock = psutil.cpu_freq().current
 machine = platform.uname().machine
-hdd_usable_size = disk.ret()[0]
-#hdd_actual_size = disk.ret()[1]
-hdd_used_size = disk.ret()[2]
-hdd_free_size = disk.ret()[3]
+# hdd_usable_size = disk.ret()[0]
+# #hdd_actual_size = disk.ret()[1]
+# hdd_used_size = disk.ret()[2]
+# hdd_free_size = disk.ret()[3]
 swap = psutil.swap_memory()
 soket = pc.Win32_Processor()[0].SocketDesignation
 virt = pc.Win32_Processor()[0].VirtualizationFirmwareEnabled
@@ -145,7 +130,7 @@ def restore():
 	os.startfile('C:\\Windows\\System32\\rstrui.exe')
 
 def web():
-	webbrowser.open('https://sites.google.com/view/techsaralk')
+	webbrowser.open('https://www.techsaralk.epizy.com/')
 
 def github():
 	webbrowser.open('https://github.com/DasunNethsara-04')
@@ -206,16 +191,17 @@ def used_swap():
 def free__swap():
 	free_swap.config(text=f'{size(swap.free)}')
 	free_swap.after(1000, free__swap)
-dis = ''
-def disk_part():
-	global lst, dis
-	for i in psutil.disk_partitions():
-		if i[2] == "":
-			continue
-		drive, percent = i[0], float(psutil.disk_usage(i[0]).percent)
-		free = round(100 - percent, 2)
-		dis = Label(frame, text=f'{drive}\t\t{percent}%\t\t{free}%', font='arial 18', fg='green', bg=bgcolor)
-		dis.pack(pady=10)
+
+# dis = ''
+# def disk_part():
+# 	global lst, dis
+# 	for i in psutil.disk_partitions():
+# 		if i[2] == "":
+# 			continue
+# 		drive, percent = i[0], float(psutil.disk_usage(i[0]).percent)
+# 		free = round(100 - percent, 2)
+# 		dis = Label(frame, text=f'{drive}\t\t{percent}%\t\t{free}%', font='arial 18', fg='green', bg=bgcolor)
+# 		dis.pack(pady=10)
 
 def theme_changer():
 	global state
@@ -289,20 +275,20 @@ def theme_changer():
 		free_swap.config(bg=dark_bg, fg='white')
 
 		#frame.config(bg=dark_bg)
-		lbl53.config(bg=dark_bg)
-		lbl54.config(bg=dark_bg, fg='blue')
-		lbl55.config(bg=dark_bg, fg='white')
-		lbl56.config(bg=dark_bg, fg='white')
-		lbl57.config(bg=dark_bg, fg='white')
-		lbl58.config(bg=dark_bg, fg='white')
-		lbl59.config(bg=dark_bg, fg='white')
-		lbl60.config(bg=dark_bg, fg='white')
-		lbl61.config(bg=dark_bg, fg='blue')
-		lbl62.config(bg=dark_bg, fg='white')
-		lbl63.config(bg=dark_bg, fg='white')
-		lbl64.config(bg=dark_bg, fg='white')
-		lbl65.config(bg=dark_bg, fg='white')
-		dis.config(bg=dark_bg, fg='green')
+		# lbl53.config(bg=dark_bg)
+		# lbl54.config(bg=dark_bg, fg='blue')
+		# lbl55.config(bg=dark_bg, fg='white')
+		# lbl56.config(bg=dark_bg, fg='white')
+		# lbl57.config(bg=dark_bg, fg='white')
+		# lbl58.config(bg=dark_bg, fg='white')
+		# lbl59.config(bg=dark_bg, fg='white')
+		# lbl60.config(bg=dark_bg, fg='white')
+		# lbl61.config(bg=dark_bg, fg='blue')
+		# lbl62.config(bg=dark_bg, fg='white')
+		# lbl63.config(bg=dark_bg, fg='white')
+		# lbl64.config(bg=dark_bg, fg='white')
+		# lbl65.config(bg=dark_bg, fg='white')
+		# dis.config(bg=dark_bg, fg='green')
 
 		lbl66.config(bg=dark_bg)
 		lbl67.config(bg=dark_bg, fg='white')
@@ -432,20 +418,20 @@ def theme_changer():
 		free_swap.config(bg=bgcolor, fg=fgcolor2)
 
 		#frame.config(bg=bgcolor)
-		lbl53.config(bg=bgcolor)
-		lbl54.config(bg=bgcolor, fg='blue')
-		lbl55.config(bg=bgcolor, fg=fgcolor2)
-		lbl56.config(bg=bgcolor, fg=fgcolor2)
-		lbl57.config(bg=bgcolor, fg=fgcolor2)
-		lbl58.config(bg=bgcolor, fg=fgcolor2)
-		lbl59.config(bg=bgcolor, fg=fgcolor2)
-		lbl60.config(bg=bgcolor, fg=fgcolor2)
-		lbl61.config(bg=bgcolor, fg='blue')
-		lbl62.config(bg=bgcolor, fg=fgcolor2)
-		lbl63.config(bg=bgcolor, fg=fgcolor2)
-		lbl64.config(bg=bgcolor, fg=fgcolor2)
-		lbl65.config(bg=bgcolor, fg=fgcolor2)
-		dis.config(bg=bgcolor, fg='green')
+		# lbl53.config(bg=bgcolor)
+		# lbl54.config(bg=bgcolor, fg='blue')
+		# lbl55.config(bg=bgcolor, fg=fgcolor2)
+		# lbl56.config(bg=bgcolor, fg=fgcolor2)
+		# lbl57.config(bg=bgcolor, fg=fgcolor2)
+		# lbl58.config(bg=bgcolor, fg=fgcolor2)
+		# lbl59.config(bg=bgcolor, fg=fgcolor2)
+		# lbl60.config(bg=bgcolor, fg=fgcolor2)
+		# lbl61.config(bg=bgcolor, fg='blue')
+		# lbl62.config(bg=bgcolor, fg=fgcolor2)
+		# lbl63.config(bg=bgcolor, fg=fgcolor2)
+		# lbl64.config(bg=bgcolor, fg=fgcolor2)
+		# lbl65.config(bg=bgcolor, fg=fgcolor2)
+		# dis.config(bg=bgcolor, fg='green')
 
 		lbl66.config(bg=bgcolor)
 		lbl67.config(bg=bgcolor, fg=fgcolor2)
@@ -570,7 +556,7 @@ tabs.pack(fill=BOTH, pady=5, expand=True)
 tab1 = ttk.Frame(tabs, width=1200, height=750)
 tab2 = ttk.Frame(tabs, width=1200, height=750)
 tab3 = ttk.Frame(tabs, width=1200, height=750)
-tab4 = ttk.Frame(tabs, width=1200, height=750)
+# tab4 = ttk.Frame(tabs, width=1200, height=750)
 tab5 = ttk.Frame(tabs, width=1200, height=750)
 tab6 = ttk.Frame(tabs, width=1200, height=750)
 tab7 = ttk.Frame(tabs, width=1200, height=750)
@@ -579,7 +565,7 @@ tab8 = ttk.Frame(tabs, width=1200, height=750)
 tabs.add(tab1, text='Dashboard')
 tabs.add(tab2, text='Processor')
 tabs.add(tab3, text='Memory')
-tabs.add(tab4, text='Storage')
+# tabs.add(tab4, text='Storage')
 tabs.add(tab5, text='O. S.')
 tabs.add(tab6, text='Graphics')
 tabs.add(tab7, text='Utilities')
@@ -754,40 +740,40 @@ lbl52 = Label(tab3, image=ram_img, bd=0, bg=bgcolor)
 lbl52.pack(side=BOTTOM, pady=30)
 ########					########
 
-######## TAB 4 - Storage ########
-frame = ttk.Frame(tab4, width=550, height=700)
-frame.place(x=580, y=240)
+# ######## TAB 4 - Storage ########
+# frame = ttk.Frame(tab4, width=550, height=700)
+# frame.place(x=580, y=240)
 
-lbl53 = Label(tab4, text='STORAGE', font='Poppins 40 bold', fg=fgcolor, bg=bgcolor)
-lbl53.pack()
-lbl54 = Label(tab4, text='Disk Information', font='Poppins 25', fg='blue', bg=bgcolor)
-lbl54.place(x=15, y=140)
-#Label(tab4, text='Capacity:', font='arial 18', fg=fgcolor2, bg=bgcolor).place(x=15, y=200)
-lbl55 = Label(tab4, text='Usable:', font='arial 18', fg=fgcolor2, bg=bgcolor)
-lbl55.place(x=15, y=200)
-lbl56 = Label(tab4, text='Used:', font='arial 18', fg=fgcolor2, bg=bgcolor)
-lbl56.place(x=15, y=260)
-lbl57 = Label(tab4, text='Free:', font='arial 18', fg=fgcolor2, bg=bgcolor)
-lbl57.place(x=15, y=320)
+# lbl53 = Label(tab4, text='STORAGE', font='Poppins 40 bold', fg=fgcolor, bg=bgcolor)
+# lbl53.pack()
+# lbl54 = Label(tab4, text='Disk Information', font='Poppins 25', fg='blue', bg=bgcolor)
+# lbl54.place(x=15, y=140)
+# #Label(tab4, text='Capacity:', font='arial 18', fg=fgcolor2, bg=bgcolor).place(x=15, y=200)
+# lbl55 = Label(tab4, text='Usable:', font='arial 18', fg=fgcolor2, bg=bgcolor)
+# lbl55.place(x=15, y=200)
+# lbl56 = Label(tab4, text='Used:', font='arial 18', fg=fgcolor2, bg=bgcolor)
+# lbl56.place(x=15, y=260)
+# lbl57 = Label(tab4, text='Free:', font='arial 18', fg=fgcolor2, bg=bgcolor)
+# lbl57.place(x=15, y=320)
 
 #Label(tab4, text=f'{hdd_actual_size}GB', font='arial 18', fg=fgcolor2, bg=bgcolor).place(x=180, y=200)
-lbl58 = Label(tab4, text=f'{hdd_usable_size}GB', font='arial 18', fg=fgcolor2, bg=bgcolor)
-lbl58.place(x=180, y=200)
-lbl59 = Label(tab4, text=f'{hdd_used_size}GB', font='arial 18', fg=fgcolor2, bg=bgcolor)
-lbl59.place(x=180, y=260)
-lbl60 = Label(tab4, text=f'{hdd_free_size}GB', font='arial 18', fg=fgcolor2, bg=bgcolor)
-lbl60.place(x=180, y=320)
+# lbl58 = Label(tab4, text=f'{hdd_usable_size}GB', font='arial 18', fg=fgcolor2, bg=bgcolor)
+# lbl58.place(x=180, y=200)
+# lbl59 = Label(tab4, text=f'{hdd_used_size}GB', font='arial 18', fg=fgcolor2, bg=bgcolor)
+# lbl59.place(x=180, y=260)
+# lbl60 = Label(tab4, text=f'{hdd_free_size}GB', font='arial 18', fg=fgcolor2, bg=bgcolor)
+# lbl60.place(x=180, y=320)
 
-lbl61 = Label(tab4, text='Disk Partitions', font='Poppins 25', fg='blue',  bg=bgcolor)
-lbl61.place(x=580, y=140)
-lbl62 = Label(tab4, text='Disk', font='Poppins 19', fg=fgcolor2, bg=bgcolor)
-lbl62.place(x=580, y=200)
-lbl63 = Label(tab4, text='Used', font='Poppins 19', fg=fgcolor2, bg=bgcolor)
-lbl63.place(x=790, y=200)
-lbl64 = Label(tab4, text='Free', font='Poppins 19', fg=fgcolor2, bg=bgcolor)
-lbl64.place(x=990, y=200)
-lbl65 = Label(tab4, image=hdd_img, bd=0, bg=bgcolor)
-lbl65.pack(side=BOTTOM, pady=30)
+# lbl61 = Label(tab4, text='Disk Partitions', font='Poppins 25', fg='blue',  bg=bgcolor)
+# lbl61.place(x=580, y=140)
+# lbl62 = Label(tab4, text='Disk', font='Poppins 19', fg=fgcolor2, bg=bgcolor)
+# lbl62.place(x=580, y=200)
+# lbl63 = Label(tab4, text='Used', font='Poppins 19', fg=fgcolor2, bg=bgcolor)
+# lbl63.place(x=790, y=200)
+# lbl64 = Label(tab4, text='Free', font='Poppins 19', fg=fgcolor2, bg=bgcolor)
+# lbl64.place(x=990, y=200)
+# lbl65 = Label(tab4, image=hdd_img, bd=0, bg=bgcolor)
+# lbl65.pack(side=BOTTOM, pady=30)
 ########					########
 
 ######## TAB 5 - OS ########
@@ -928,21 +914,20 @@ btn3.place(x=35, y=500)
 btn4 = Button(tab8, text='YouTube', bd=0, font='Ubuntu 15 underline', fg='blue', command=youtube, cursor="hand2",bg=bgcolor)
 btn4.place(x=35, y=550)
 ########					########
+# disk_part()
+if __name__ == "__main__":
+	# callback functions
+	upTime()
+	battery()
+	cpu_check()
+	ramcheck()
+	totRam()
+	useRam()
+	freeRam()
+	swapPer()
+	total_swap()
+	used_swap()
+	free__swap()
 
-# callback functions
-upTime()
-battery()
-cpu_check()
-ramcheck()
-totRam()
-useRam()
-freeRam()
-swapPer()
-total_swap()
-used_swap()
-free__swap()
-disk_part()
-
-
-# run and looping the main user interface
-root.mainloop()
+	# run and looping the main user interface
+	root.mainloop()
