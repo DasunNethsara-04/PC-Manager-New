@@ -1,6 +1,7 @@
 # imports
 from tkinter import *
 from tkinter import ttk
+from typing import LiteralString
 from PIL import Image, ImageTk		# pip install pillow
 from tkinter import messagebox
 import platform
@@ -14,29 +15,27 @@ import wmi 				# pip install wmi
 import pystray
 
 pc = wmi.WMI()
-# dee9f4
-fgcolor = '#204db2'
-fgcolor2 = '#000000'
-#bgcolor = '#d5e4f2'
-bgcolor = '#e8f0f4'
 
-dark_bg = '#1d1d1d'
-#dark_bg = '#000000'
+# color codes
+fgcolor: str = '#204db2'
+fgcolor2: str = '#000000'
+bgcolor: str = '#e8f0f4'
+dark_bg: str = '#1d1d1d'
 
 # important variables
 total = 0
-pc_name = platform.node()
+pc_name: str = platform.node()
 cpu_data = pc.Win32_Processor()[0].name
-ram_data = round((psutil.virtual_memory().total) / (1024 ** 3), 2)
-sys = platform.system()
-rls = platform.release()
-user = psutil.users()[0][0]
-edition = platform.win32_edition()
-cpu_cores = psutil.cpu_count(logical=False)
-cpu_threads = psutil.cpu_count(logical=True)
-arch = platform.architecture()[0]
-clock = psutil.cpu_freq().current
-machine = platform.uname().machine
+ram_data: float = round((psutil.virtual_memory().total) / (1024 ** 3), 2)
+sys: str = platform.system()
+rls: str = platform.release()
+user: str = psutil.users()[0][0]
+edition: str = platform.win32_edition()
+cpu_cores: int = psutil.cpu_count(logical=False)
+cpu_threads: int = psutil.cpu_count(logical=True)
+arch: str = platform.architecture()[0]
+clock: float = psutil.cpu_freq().current
+machine: str = platform.uname().machine
 # hdd_usable_size = disk.ret()[0]
 # #hdd_actual_size = disk.ret()[1]
 # hdd_used_size = disk.ret()[2]
@@ -58,11 +57,10 @@ os_version = pc.Win32_OperatingSystem()[0].Version
 os_sys_dir = pc.Win32_OperatingSystem()[0].SystemDirectory
 os_win_dir = pc.Win32_OperatingSystem()[0].WindowsDirectory
 
-# boot screen
+# splash screen
 import splash
 
 # functions
-
 def on_minimize(window) -> None:
     window.withdraw()  # Hide the main window
     icon = pystray.Icon("PC Manager")
@@ -73,7 +71,7 @@ def on_minimize(window) -> None:
         window.deiconify()  # Restore the main window
         icon.stop()
     
-    def quit_app(icon, item):
+    def quit_app(icon, item) -> None:
         icon.stop()
         window.destroy()  # Close the application
     
@@ -89,56 +87,56 @@ def on_minimize(window) -> None:
     icon.menu = pystray.Menu(*menu)
     icon.run()
 
-def cleanup():
+def cleanup() -> None:
 	os.startfile('C:\\Windows\\System32\\cleanmgr.exe')
 
-def ctrl():
+def ctrl() -> None:
 	path = 'C:\\WINDOWS\\System32\\compmgmt.msc'
 	os.startfile(os.path.join(path))
 
-def defrag():
+def defrag() -> None:
 	os.startfile('C:\\Windows\\System32\\dfrgui.exe')
 
-def sys_info():
+def sys_info() -> None:
 	path = 'C:\\WINDOWS\\System32\\msinfo32.exe'
 	os.startfile(os.path.join(path))
 
-def add_rem():
+def add_rem() -> None:
 	path = 'C:\\WINDOWS\\System32\\appwiz.cpl'
 	os.startfile(os.path.join(path))
 
-def win():
+def win() -> None:
 	path = 'C:\\WINDOWS\\system32\\winver.exe'
 	os.startfile(os.path.join(path))
 
-def restore():
+def restore() -> None:
 	os.startfile('C:\\Windows\\System32\\rstrui.exe')
 
-def web():
+def web() -> None:
 	webbrowser.open('https://www.techsaralk.epizy.com/')
 
-def github():
+def github() -> None:
 	webbrowser.open('https://github.com/DasunNethsara-04')
 
-def telegram():
+def telegram() -> None:
 	webbrowser.open('https://t.me/techsara_lk')
 
-def youtube():
+def youtube() -> None:
 	webbrowser.open('https://www.youtube.com/channel/UCpWe6k8GxYuLmlzlvX7VBRg')
 
-def shutdown():
+def shutdown() -> None:
 	os.system('shutdown.exe -s -t 00')
 
-def restart():
+def restart() -> None:
 	os.system('shutdown.exe -r -t 00')
 
-def hibernate():
+def hibernate() -> None:
 	os.system('rundll32.exe powrprof.dll, SetSuspendState')
 
-def lock():
+def lock() -> None:
 	os.system('rundll32.exe user32.dll, LockWorkStation')
 
-def log_off():
+def log_off() -> None:
 	os.system('shutdown.exe -l')
 
 # dis = ''
@@ -152,7 +150,7 @@ def log_off():
 # 		dis = Label(frame, text=f'{drive}\t\t{percent}%\t\t{free}%', font='arial 18', fg='green', bg=bgcolor)
 # 		dis.pack(pady=10)
 
-def theme_changer():
+def theme_changer() -> None:
 	global state
 	if state:
 		s.configure('TFrame', background=dark_bg)
@@ -443,7 +441,7 @@ def theme_changer():
 		state = True
 
 # main interface
-def main():
+def main() -> None:
 	root = Tk()
 	root.title("PC Manager 3")
 
@@ -462,12 +460,12 @@ def main():
 	# greeting
 	messagebox.showinfo('Welcome', f'Hello, {user}')
 
-	def secs2hours(secs):
+	def secs2hours(secs) -> LiteralString:
 		mm, ss = divmod(secs, 60)
 		hh, mm = divmod(mm, 60)
 		return "%d:%02d:%02d" % (hh, mm, ss)
 
-	def battery():
+	def battery() -> None:
 		if not hasattr(psutil, "sensors_battery"):
 			#return sys.exit("platform not supported")
 			btry.config(text='Platform not supported')
@@ -480,7 +478,7 @@ def main():
 			btry.after(1000, battery)
 			#print("charge:     %s%%" % round(batt.percent, 2))
    
-	def upTime():
+	def upTime() -> None:
 		lib = ctypes.windll.kernel32
 		t = lib.GetTickCount64()
 		t = int(str(t)[:-3])
@@ -494,49 +492,49 @@ def main():
 			usr.config(text=f'{days} days, {hours} hours, {mins} minutes, {sec} seconds')
 		usr.after(1000, upTime)
 
-	def size(byte):
+	def size(byte) -> str | None:
 		for x in ['B', 'KB', 'MB', 'GB', 'TB']:
 			if byte < 1024:
 				return f'{byte:.2f}{x}'
 			byte = byte / 1024
 
-	def swapPer():
+	def swapPer() -> None:
 		swap_per.config(text=f'{swap.percent}%')
 		swap_per.after(1000, swapPer)
 
-	def total_swap():
+	def total_swap() -> None:
 		tot_swap.config(text=f'{size(swap.total)}')
 		tot_swap.after(1000, total_swap)
 
-	def used_swap():
+	def used_swap() -> None:
 		usd_swap.config(text=f'{size(swap.used)}')
 		usd_swap.after(1000, used_swap)
 
-	def free__swap():
+	def free__swap() -> None:
 		free_swap.config(text=f'{size(swap.free)}')
 		free_swap.after(1000, free__swap)
 
-	def cpu_check():
+	def cpu_check() -> None:
 		cpu_data = psutil.cpu_percent()
 		cpu.config(text=str(cpu_data)+"%")
 		cpu.after(1000, cpu_check)
 
-	def ramcheck():
+	def ramcheck() -> None:
 		per_ram = psutil.virtual_memory().percent
 		ram.config(text=str(per_ram)+'%')
 		ram.after(1000, ramcheck)
 
-	def totRam():
+	def totRam() -> None:
 		total_ram = round((psutil.virtual_memory().total) / (1024 ** 3), 2)
 		tot_ram.config(text=str(total_ram)+'GB (usable)')
 		tot_ram.after(1000, totRam)
 
-	def useRam():
+	def useRam() -> None:
 		used_ram = round((psutil.virtual_memory().used) / (1024 ** 3), 2)
 		usd_ram.config(text=str(used_ram)+'GB')
 		usd_ram.after(1000, useRam)
 
-	def freeRam():
+	def freeRam() -> None:
 		freeram = round((psutil.virtual_memory().free) / (1024 ** 3), 2)
 		free_ram.config(text=str(freeram)+'GB')
 		free_ram.after(1000, freeRam)
@@ -959,7 +957,7 @@ def main():
 	# run and looping the main user interface
 	root.mainloop()
 	########					########
-# disk_part()
+
 if __name__ == "__main__":
 	main()
 	
