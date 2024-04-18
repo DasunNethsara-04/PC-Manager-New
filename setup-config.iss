@@ -10,7 +10,7 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{4BF63D44-78EA-435E-A764-A0267D8AE188}
+AppId={{69932E26-8483-459D-A2EB-7D1AF666F63F}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -39,17 +39,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Program Files (x86)\Inno Setup 6\Examples\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Intel\Documents\output\main\disk.py"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Intel\Documents\output\main\icon.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Intel\Documents\output\main\PCMgr.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Intel\Documents\output\main\splash.py"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Intel\Documents\output\main\images\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Intel\Documents\output\main\_internal\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Intel\Documents\output\main\fonts\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Users\Intel\Documents\output\main\fonts\Poppins-Black.ttf"; DestDir: "{fonts}"; Flags: onlyifdoesntexist
-Source: "C:\Users\Intel\Documents\output\main\fonts\Ubuntu-Bold.ttf"; DestDir: "{fonts}"; Flags: onlyifdoesntexist
-Source: "C:\Users\Intel\Documents\output\main\fonts\Game Of Squids.ttf"; DestDir: "{fonts}"; Flags: onlyifdoesntexist
+;Source: "C:\Program Files (x86)\Inno Setup 6\Examples\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Intel\Documents\output\main\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "install_fonts.vbs"; DestDir: "{tmp}"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -60,7 +52,5 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-Filename: "{win}\Fonts\Poppins-Black.ttf"; StatusMsg: "Installing Poppins-Black.ttf..."; Flags: shellexec waituntilterminated
-Filename: "{win}\Fonts\Ubuntu-Bold.ttf"; StatusMsg: "Installing Ubuntu-Bold.ttf..."; Flags: shellexec waituntilterminated
-Filename: "{win}\Fonts\Game Of Squids.ttf"; StatusMsg: "Installing Game Of Squids.ttf..."; Flags: shellexec waituntilterminated
+Filename: "{tmp}\install_fonts.vbs"; Flags: shellexec waituntilterminated
 
