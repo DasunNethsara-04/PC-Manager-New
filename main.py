@@ -13,6 +13,7 @@ import webbrowser
 import ctypes
 import wmi 				# pip install wmi
 import pystray
+from functions import *
 
 pc = wmi.WMI()
 
