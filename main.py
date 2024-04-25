@@ -9,6 +9,7 @@ import datetime
 import ctypes
 import wmi
 import pystray
+from functions import *
 
 pc = wmi.WMI()
 
