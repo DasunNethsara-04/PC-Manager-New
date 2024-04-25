@@ -72,7 +72,7 @@ def on_minimize(window) -> None:
 	window.withdraw()  # Hide the main window
 	icon = pystray.Icon("PC Manager")
 	icon.icon = Image.open("icon.ico")  # Replace "icon.png" with your icon file
-	icon.title = "PC Manager"
+	icon.title = f"CPU: {cpu_usage()}%\nRAM: {ram_usage()}%"
 	
 	def on_double_click(icon, item) -> None:
 		window.deiconify()  # Restore the main window

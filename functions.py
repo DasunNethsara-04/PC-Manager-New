@@ -1,4 +1,4 @@
-import os, webbrowser
+import os, webbrowser, psutil
 # import disk
 
 def cleanup() -> None:
@@ -284,3 +284,10 @@ def log_off() -> None:
 # 		free = round(100 - percent, 2)
 # 		dis = Label(frame, text=f'{drive}\t\t{percent}%\t\t{free}%', font='arial 18', fg='green', bg=bgcolor)
 # 		dis.pack(pady=10)
+
+
+def cpu_usage() -> None:
+	return psutil.cpu_percent()
+
+def ram_usage() -> None:
+	return psutil.virtual_memory().percent
