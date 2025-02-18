@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Label, Frame, Tk, SUNKEN
 from PIL import Image, ImageTk
 import time
 
@@ -14,8 +14,6 @@ y_cordinate = (screen_height / 2) - (height_of_window / 2)
 root.geometry("%dx%d+%d+%d" % (width_of_window, height_of_window, x_cordinate, y_cordinate))
 root.config(bg=bgcolor)
 root.overrideredirect(True)
-
-
 
 a = ImageTk.PhotoImage(Image.open('images/1.png').resize((10, 10)))
 b = ImageTk.PhotoImage(Image.open('images/2.png').resize((10, 10)))
@@ -57,7 +55,6 @@ for i in range(3):
     Label(root, image=a, bd=0, relief=SUNKEN).place(x=240, y=195)
     root.update_idletasks()
     time.sleep(0.5)
-
 
 root.destroy()
 root.mainloop()
