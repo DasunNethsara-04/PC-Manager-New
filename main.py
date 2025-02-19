@@ -1,7 +1,7 @@
 # imports
 
 # splash screen
-import splash
+# import splash
 
 from tkinter import *
 from tkinter import ttk
@@ -14,6 +14,9 @@ import ctypes
 import wmi
 import pystray
 from functions import *
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.animation as animation
 
 pc = wmi.WMI()
 
@@ -400,6 +403,56 @@ def main() -> None:
 	root.iconbitmap('icon.ico')
 	root.resizable(0, 0)
 
+	# Matplotlib Figure and Axes
+	fig, (ax_cpu, ax_swap, ax_mem) = plt.subplots(3, 1, figsize=(6, 6))
+
+	# Initialize Data Lists
+	cpu_usage = [0] * 30
+	swap_usage = [0] * 30
+	mem_usage = [0] * 30
+
+	def update_graphs(i):
+		# Fetch real-time data
+		cpu_percent = psutil.cpu_percent(interval=0)
+		swap_percent = psutil.swap_memory().percent
+		mem_percent = psutil.virtual_memory().percent
+
+		# Append new data
+		cpu_usage.append(cpu_percent)
+		swap_usage.append(swap_percent)
+		mem_usage.append(mem_percent)
+
+		# Keep only the last 30 values
+		cpu_usage.pop(0)
+		swap_usage.pop(0)
+		mem_usage.pop(0)
+
+		# Clear old plots
+		ax_cpu.clear()
+		ax_swap.clear()
+		ax_mem.clear()
+
+		# Update CPU Chart
+		ax_cpu.plot(cpu_usage, color='blue')
+		ax_cpu.set_title("CPU Utilization (%)")
+		ax_cpu.set_ylim(0, 100)
+		ax_cpu.text(15, 80, f"{cpu_percent:.1f}%", fontsize=12, color='blue', ha='center')
+
+		# Update SWAP Memory Chart
+		ax_swap.plot(swap_usage, color='red')
+		ax_swap.set_title("SWAP Memory Utilization (%)")
+		ax_swap.set_ylim(0, 100)
+		ax_swap.text(15, 80, f"{swap_percent:.1f}%", fontsize=12, color='red', ha='center')
+
+		# Update Main Memory Chart
+		ax_mem.plot(mem_usage, color='green')
+		ax_mem.set_title("Main Memory Utilization (%)")
+		ax_mem.set_ylim(0, 100)
+		ax_mem.text(15, 80, f"{mem_percent:.1f}%", fontsize=12, color='green', ha='center')
+
+		# Redraw the figure
+		fig.tight_layout()
+
 	# greeting
 	messagebox.showinfo('Welcome', f'Hello, {user}')
 
@@ -477,31 +530,6 @@ def main() -> None:
 		free_ram.config(text=str(freeram) + 'GB')
 		free_ram.after(1000, freeRam)
 
-	# images
-	cpu_img = Image.open('images/cpu.png')
-	cpu_img = cpu_img.resize((150, 150))
-	cpu_img = ImageTk.PhotoImage(cpu_img)
-
-	gpu_img = Image.open('images/graphics-card.png')
-	gpu_img = gpu_img.resize((200, 200))
-	gpu_img = ImageTk.PhotoImage(gpu_img)
-
-	os_img1 = Image.open('images/windows.png')
-	os_img1 = os_img1.resize((120, 120))
-	os_img1 = ImageTk.PhotoImage(os_img1)
-
-	os_img2 = Image.open('images/linux.png')
-	os_img2 = os_img2.resize((120, 120))
-	os_img2 = ImageTk.PhotoImage(os_img2)
-
-	ram_img = Image.open('images/ram-memory.png')
-	ram_img = ram_img.resize((150, 150))
-	ram_img = ImageTk.PhotoImage(ram_img)
-
-	hdd_img = Image.open('images/hard-disk.png')
-	hdd_img = hdd_img.resize((150, 150))
-	hdd_img = ImageTk.PhotoImage(hdd_img)
-
 	# ttk styling
 	s = ttk.Style()
 	s.configure('TNotebook.Tab', font=('Calibri', 10))
@@ -519,7 +547,7 @@ def main() -> None:
 	tab1 = ttk.Frame(tabs, width=1200, height=750)
 	tab2 = ttk.Frame(tabs, width=1200, height=750)
 	tab3 = ttk.Frame(tabs, width=1200, height=750)
-	# tab4 = ttk.Frame(tabs, width=1200, height=750)
+	tab4 = ttk.Frame(tabs, width=1200, height=750)
 	tab5 = ttk.Frame(tabs, width=1200, height=750)
 	tab6 = ttk.Frame(tabs, width=1200, height=750)
 	tab7 = ttk.Frame(tabs, width=1200, height=750)
@@ -528,7 +556,7 @@ def main() -> None:
 	tabs.add(tab1, text='Dashboard')
 	tabs.add(tab2, text='Processor')
 	tabs.add(tab3, text='Memory')
-	# tabs.add(tab4, text='Storage')
+	tabs.add(tab4, text='Utilizations')
 	tabs.add(tab5, text='O. S.')
 	tabs.add(tab6, text='Graphics')
 	tabs.add(tab7, text='Utilities')
@@ -592,6 +620,30 @@ def main() -> None:
 
 	########					########
 
+	cpu_img = Image.open('images/cpu.png')
+	cpu_img = cpu_img.resize((150, 150))
+	cpu_img = ImageTk.PhotoImage(cpu_img)
+
+	gpu_img = Image.open('images/graphics-card.png')
+	gpu_img = gpu_img.resize((200, 200))
+	gpu_img = ImageTk.PhotoImage(gpu_img)
+
+	os_img1 = Image.open('images/windows.png')
+	os_img1 = os_img1.resize((120, 120))
+	os_img1 = ImageTk.PhotoImage(os_img1)
+
+	os_img2 = Image.open('images/linux.png')
+	os_img2 = os_img2.resize((120, 120))
+	os_img2 = ImageTk.PhotoImage(os_img2)
+
+	ram_img = Image.open('images/ram-memory.png')
+	ram_img = ram_img.resize((150, 150))
+	ram_img = ImageTk.PhotoImage(ram_img)
+
+	hdd_img = Image.open('images/hard-disk.png')
+	hdd_img = hdd_img.resize((150, 150))
+	hdd_img = ImageTk.PhotoImage(hdd_img)
+
 	######## TAB 2 - Processor ########
 	lbl16 = Label(tab2, text='PROCESSOR', font='Poppins 40 bold', fg=fgcolor, bg=bgcolor)
 	lbl16.pack()
@@ -645,8 +697,9 @@ def main() -> None:
 	lbl39 = Label(tab2, text=virt, font='arial 18', fg=fgcolor2, bg=bgcolor)
 	lbl39.place(x=308, y=580)
 
-	lbl40 = Label(tab2, image=cpu_img, bd=0, bg=bgcolor)
-	lbl40.pack(side=RIGHT, padx=40)
+	# lbl40 = Label(tab2, image=cpu_img, bd=0, bg=bgcolor)
+	# lbl40.image = cpu_img
+	# lbl40.pack(side=RIGHT, padx=40)
 
 	########					########
 
@@ -696,44 +749,18 @@ def main() -> None:
 	lbl51.place(x=720, y=390)
 	free_swap = Label(tab3, font='arial 18', fg=fgcolor2, bg=bgcolor)
 	free_swap.place(x=950, y=390)
-	lbl52 = Label(tab3, image=ram_img, bd=0, bg=bgcolor)
-	lbl52.pack(side=BOTTOM, pady=30)
+	# lbl52 = Label(tab3, image=ram_img, bd=0, bg=bgcolor)
+	# lbl52.pack(side=BOTTOM, pady=30)
 	########					########
 
 	# ######## TAB 4 - Storage ########
-	# frame = ttk.Frame(tab4, width=550, height=700)
-	# frame.place(x=580, y=240)
+	# Embed Matplotlib Figure in Tkinter
+	canvas = FigureCanvasTkAgg(fig, master=tab4)
+	canvas.get_tk_widget().pack(fill="both", expand=True)  # Now it expands inside tab4
 
-	# lbl53 = Label(tab4, text='STORAGE', font='Poppins 40 bold', fg=fgcolor, bg=bgcolor)
-	# lbl53.pack()
-	# lbl54 = Label(tab4, text='Disk Information', font='Poppins 25', fg='blue', bg=bgcolor)
-	# lbl54.place(x=15, y=140)
-	# #Label(tab4, text='Capacity:', font='arial 18', fg=fgcolor2, bg=bgcolor).place(x=15, y=200)
-	# lbl55 = Label(tab4, text='Usable:', font='arial 18', fg=fgcolor2, bg=bgcolor)
-	# lbl55.place(x=15, y=200)
-	# lbl56 = Label(tab4, text='Used:', font='arial 18', fg=fgcolor2, bg=bgcolor)
-	# lbl56.place(x=15, y=260)
-	# lbl57 = Label(tab4, text='Free:', font='arial 18', fg=fgcolor2, bg=bgcolor)
-	# lbl57.place(x=15, y=320)
+	# Start Matplotlib Animation (AFTER GUI is ready)
+	ani = animation.FuncAnimation(fig, update_graphs, interval=1000)
 
-	# Label(tab4, text=f'{hdd_actual_size}GB', font='arial 18', fg=fgcolor2, bg=bgcolor).place(x=180, y=200)
-	# lbl58 = Label(tab4, text=f'{hdd_usable_size}GB', font='arial 18', fg=fgcolor2, bg=bgcolor)
-	# lbl58.place(x=180, y=200)
-	# lbl59 = Label(tab4, text=f'{hdd_used_size}GB', font='arial 18', fg=fgcolor2, bg=bgcolor)
-	# lbl59.place(x=180, y=260)
-	# lbl60 = Label(tab4, text=f'{hdd_free_size}GB', font='arial 18', fg=fgcolor2, bg=bgcolor)
-	# lbl60.place(x=180, y=320)
-
-	# lbl61 = Label(tab4, text='Disk Partitions', font='Poppins 25', fg='blue',  bg=bgcolor)
-	# lbl61.place(x=580, y=140)
-	# lbl62 = Label(tab4, text='Disk', font='Poppins 19', fg=fgcolor2, bg=bgcolor)
-	# lbl62.place(x=580, y=200)
-	# lbl63 = Label(tab4, text='Used', font='Poppins 19', fg=fgcolor2, bg=bgcolor)
-	# lbl63.place(x=790, y=200)
-	# lbl64 = Label(tab4, text='Free', font='Poppins 19', fg=fgcolor2, bg=bgcolor)
-	# lbl64.place(x=990, y=200)
-	# lbl65 = Label(tab4, image=hdd_img, bd=0, bg=bgcolor)
-	# lbl65.pack(side=BOTTOM, pady=30)
 	########					########
 
 	######## TAB 5 - OS ########
@@ -769,10 +796,10 @@ def main() -> None:
 	lbl80 = Label(tab5, text=os_win_dir, font='arial 18', fg=fgcolor2, bg=bgcolor)
 	lbl80.place(x=300, y=480)
 
-	lbl81 = Label(tab5, image=os_img2, bd=0, bg=bgcolor)
-	lbl81.pack(side=RIGHT, padx=40)
-	lbl82 = Label(tab5, image=os_img1, bd=0, bg=bgcolor)
-	lbl82.pack(side=RIGHT, padx=40)
+	# lbl81 = Label(tab5, image=os_img2, bd=0, bg=bgcolor)
+	# lbl81.pack(side=RIGHT, padx=40)
+	# lbl82 = Label(tab5, image=os_img1, bd=0, bg=bgcolor)
+	# lbl82.pack(side=RIGHT, padx=40)
 
 	######## TAB 6 - Graphics ########
 	lbl83 = Label(tab6, text='GRAPHICS', font='Poppins 40 bold', fg=fgcolor, bg=bgcolor)
@@ -813,8 +840,8 @@ def main() -> None:
 	lbl99 = Label(tab6, text=pc.Win32_VideoController()[0].DriverVersion, font='arial 18', fg=fgcolor2, bg=bgcolor)
 	lbl99.place(x=300, y=600)
 
-	lbl100 = Label(tab6, image=gpu_img, bd=0, bg=bgcolor)
-	lbl100.pack(side=RIGHT, padx=50)
+	# lbl100 = Label(tab6, image=gpu_img, bd=0, bg=bgcolor)
+	# lbl100.pack(side=RIGHT, padx=50)
 	########					########
 
 	######## TAB 7 - Utilities ########
@@ -854,8 +881,8 @@ def main() -> None:
 	lbl111.place(x=15, y=180)
 	lbl112 = Label(tab8, text='Dasun Nethsara', font='arial 18', fg=fgcolor2, bg=bgcolor)
 	lbl112.place(x=15, y=250)
-	lbl113 = Label(tab8, image=img1, bd=0)
-	lbl113.place(x=860, y=230)
+	# lbl113 = Label(tab8, image=img1, bd=0)
+	# lbl113.place(x=860, y=230)
 	lbl114 = Label(tab8, text='Certified in Python Programming', font='Consolas 13', fg=fgcolor2, bg=bgcolor)
 	lbl114.place(x=15, y=280)
 	lbl115 = Label(tab8, text='Certified in Web Development (HTML, CSS, PHP)', font='Consolas 13', fg=fgcolor2, bg=bgcolor)
